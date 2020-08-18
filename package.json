@@ -1,0 +1,53 @@
+{
+  "name": "et-escape",
+  "version": "1.0.0",
+  "description": "a small vanilla javascript game",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack-dev-server --config webpack.development.js",
+    "build": "webpack --config webpack.production.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mitchellabrouwer/ET-Escape.git"
+  },
+  "keywords": [
+    "javascript",
+    "games"
+  ],
+  "author": "mitchell brouwer",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.11.1",
+    "@babel/preset-env": "^7.11.0",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.1.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^4.2.1",
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb": "^18.0.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-html": "^6.0.3",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "prettier": "^1.16.4",
+    "file-loader": "^6.0.0",
+    "html-loader": "^1.1.0",
+    "html-webpack-plugin": "^4.3.0",
+    "path": "^0.12.7",
+    "sass": "^1.26.10",
+    "sass-loader": "^9.0.3",
+    "style-loader": "^1.2.1",
+    "terser-webpack-plugin": "^4.1.0",
+    "url-loader": "^4.1.0",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0",
+    "webpack-merge": "^5.1.1"
+  },
+  "bugs": {
+    "url": "https://github.com/mitchellabrouwer/ET-Escape/issues"
+  },
+  "homepage": "https://github.com/mitchellabrouwer/ET-Escape#readme"
+}
