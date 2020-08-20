@@ -1,8 +1,10 @@
 import { updateGame } from './controller/game'
 import './main.scss'
-import { levels } from './model/levels'
-import PuzzleDisplay from './view/puzzle'
 
-new PuzzleDisplay(levels[1].map).render()
+// intro
+
+updateGame()
 
 document.addEventListener('keydown', updateGame, false)
+
+// submit button to run update game

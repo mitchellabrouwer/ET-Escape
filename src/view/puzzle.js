@@ -1,19 +1,18 @@
 import player from './../assets/images/alien.png'
 
-const puzzleGridDisplay = document.querySelector('.grid-container')
-
 export default class PuzzleDisplay {
   constructor(levelMap) {
     this.level = levelMap
   }
 
   static movePlayer(playerOn, newSquare) {
-    playerOn.classList.remove('active')
-    newSquare.classList.add('active')
+    playerOn.classList.remove('show')
+    newSquare.classList.add('show')
   }
 
   showPlayer(node) {
-    node.firstChild.classList.add('square-with-player', 'player-image', 'active')
+    node.classList.add('square-active')
+    node.firstChild.classList.add('square-with-player', 'player-image', 'show')
   }
 
   setLetter(node, letter) {
@@ -36,23 +35,26 @@ export default class PuzzleDisplay {
     return hiddenImage
   }
 
-  createDefaultSquare() {
+  createDefaultSquare(nodes) {
     const cell = document.createElement('div')
 
     cell.appendChild(this.setPlayerImage())
-    puzzleGridDisplay.appendChild(cell).className = `grid-item`
-    return puzzleGridDisplay.lastChild
+    nodes.appendChild(cell).className = `puzzle-square`
+    return nodes.lastChild
   }
 
   render() {
+    const puzzleNodes = document.querySelector('.puzzle-container')
     const rows = this.level.length
     const columns = this.level[0].length
 
-    puzzleGridDisplay.style.setProperty('--grid-columns', columns)
-    puzzleGridDisplay.style.setProperty('--grid-rows', rows)
+    console.log(puzzleNodes)
+
+    puzzleNodes.style.setProperty('--puzzle-columns', columns)
+    puzzleNodes.style.setProperty('--puzzle-rows', rows)
 
     this.level.flat().forEach((token) => {
-      const node = this.createDefaultSquare()
+      const node = this.createDefaultSquare(puzzleNodes)
 
       if (token === player) {
         this.showPlayer(node)
