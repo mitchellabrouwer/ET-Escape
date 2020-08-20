@@ -1,28 +1,35 @@
-import { maps } from '../model/maps'
-import { currentLevel } from '../model/state'
-import { moveHorizontal, moveVertical } from '../view/actions'
+import { levels } from '../model/levels'
+import { level } from '../model/state'
+import PuzzleDisplay from '../view/puzzle'
 
 const left = (event) => event.keyCode === 37 || event.keyCode === 65
 const up = (event) => event.keyCode === 38 || event.keyCode === 67
 const right = (event) => event.keyCode === 39 || event.keyCode === 68
 const down = (event) => event.keyCode === 40 || event.keyCode === 83
 
+function move(currentNode, index, [rowMove, columnMove], squares) {
+  const height = levels[level].map.length
+  const width = levels[level].map[0].length
+  const newRow = (Math.floor(index / height) + rowMove + width) % width
+  const newColumn = ((index % width) + columnMove + height) % height
+  const newNode = squares[newRow * width + newColumn]
+
+  PuzzleDisplay.movePlayer(currentNode, newNode)
+}
+
 export function updateGame(event) {
   const squares = document.querySelectorAll('.player-image')
   const playerOn = document.querySelector('.player-image.active')
-  const height = maps[currentLevel].length
-  const width = maps[currentLevel][0].length
+
   const index = [...squares].indexOf(playerOn)
-  const row = Math.floor(index / height)
-  const column = index % width
 
   if (left(event)) {
-    moveHorizontal(playerOn, [row, column - 1], width, squares)
+    move(playerOn, index, [0, -1], squares)
   } else if (right(event)) {
-    moveHorizontal(playerOn, [row, column + 1], width, squares)
+    move(playerOn, index, [0, 1], squares)
   } else if (up(event)) {
-    moveVertical(playerOn, [row - 1, column], width, height, squares)
+    move(playerOn, index, [-1, 0], squares)
   } else if (down(event)) {
-    moveVertical(playerOn, [row + 1, column], width, height, squares)
+    move(playerOn, index, [+1, 0], squares)
   }
 }

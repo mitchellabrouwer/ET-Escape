@@ -1,1 +1,2 @@
-export const currentLevel = 1
+export let level = 1
+export let answer = ''

@@ -2,9 +2,14 @@ import player from './../assets/images/alien.png'
 
 const puzzleGridDisplay = document.querySelector('.grid-container')
 
-export default class Level {
+export default class PuzzleDisplay {
   constructor(levelMap) {
     this.level = levelMap
+  }
+
+  static movePlayer(playerOn, newSquare) {
+    playerOn.classList.remove('active')
+    newSquare.classList.add('active')
   }
 
   showPlayer(node) {
