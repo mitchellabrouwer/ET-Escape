@@ -3,41 +3,62 @@ import PuzzleDisplay from '../view/puzzle'
 import movePlayer, { isMove } from './move'
 
 let level = 1
-let levelComplete = true
+let moves = 0
 let answer = ''
+// let complete = false
 
-// collecting letters
-const squareHasLetter = (node) => node.classList.contains('square-with-letter')
 const puzzleCorrect = (answer) => answer === levels[level].answer
-const puzzleFinished = (answer) => answer === levels[level].answer.length
+const puzzleFinished = (answer) => answer.length === levels[level].answer.length
 
-function processSquare(newSquare) {
-  // if letter add to answer
-  // remove letter from square
+function processSquare(square) {
+  const letter = square.getElementsByTagName('p')[0]
+
+  if (letter) {
+    answer += letter.innerText
+    square.removeChild(letter)
+  }
+
+  moves += 1
   // color square as used
 }
 
-function completedLevel() {}
-
-function endOfLevel() {
+function startLevel() {
   new PuzzleDisplay(levels[level].map).render()
-  levelComplete = false
+}
+
+function removeLevel() {
+  const node = document.getElementById('puzzle')
+  node.querySelectorAll('*').forEach((n) => n.remove())
+}
+
+function pass() {
+  answer = ''
+  level += 1
+  alert('win!!')
+  alert('add more levels now')
+  removeLevel()
+  updateGame()
+  // sound
+}
+
+function fail() {
+  answer = ''
+  alert('level finished')
+  confirm('retry')
+  removeLevel()
+  updateGame()
 }
 
 export function updateGame(event) {
   const squares = document.querySelectorAll('.puzzle-square')
 
-  if (levelComplete) return endOfLevel()
+  if (!squares.length) return startLevel()
 
   if (isMove(event)) processSquare(squares[movePlayer(event, level)])
 
-  // if(puzzleCorrect(answer)){
-  // level +=1
-  // sound
-  // piece of ship
-  // }
-
-  // if (puzzleFinished(answer)){
-  // endOfLevel()
-  // }
+  if (puzzleCorrect(answer)) {
+    return pass()
+  } else if (puzzleFinished(answer)) {
+    return fail()
+  }
 }
