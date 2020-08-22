@@ -1,4 +1,4 @@
-import { updateGame } from './controller/game'
+import updateGame from './controller/game'
 import './main.scss'
 
 // intro

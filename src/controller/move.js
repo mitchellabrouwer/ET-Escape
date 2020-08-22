@@ -1,4 +1,4 @@
-import { levels } from '../model/levels'
+import levels from '../model/levels'
 import PuzzleDisplay from '../view/puzzle'
 
 const left = (event) => event.keyCode === 37 || event.keyCode === 65
@@ -18,8 +18,8 @@ function moveTo(index, [rowMove, columnMove], level) {
 }
 
 export default function movePlayer(event, level) {
-  const nodes = document.querySelectorAll('.player-image')
-  const playerOn = document.querySelector('.player-image.show')
+  const nodes = document.querySelectorAll('.puzzle-square')
+  const playerOn = document.querySelector('.square-with-player')
   const currentIndex = [...nodes].indexOf(playerOn)
 
   let newIndex

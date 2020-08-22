@@ -9,18 +9,15 @@ export const startLevel = level => {
 }
 
 export const processSquare = (answer, square) => {
-  const letter = square.getElementsByTagName('p')[0]
+  const letter = square.innerHTML
+  const newSquare = square
   let updatedAnswer = answer
 
   if (letter) {
-    updatedAnswer += letter.innerText
-    square.removeChild(letter)
+    updatedAnswer += letter
+    newSquare.innerHTML = ''
   }
 
   return updatedAnswer
 }
 
-export const removeLevel = () => {
-  const node = document.getElementById('puzzle')
-  node.querySelectorAll('*').forEach(n => n.remove())
-}

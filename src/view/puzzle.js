@@ -11,9 +11,15 @@ export default class PuzzleDisplay {
     this.setStyleSizes()
   }
 
+  static removeLevel() {
+    const node = document.getElementById('puzzle')
+    node.querySelectorAll('*').forEach(n => n.remove())
+  }
+
+
   static movePlayer(playerOn, newSquare) {
-    playerOn.classList.remove('show')
-    newSquare.classList.add('show')
+    playerOn.classList.remove('square-with-player')
+    newSquare.classList.add('square-with-player')
   }
 
   setStyleSizes() {

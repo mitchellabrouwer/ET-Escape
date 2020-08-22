@@ -1,11 +1,13 @@
-import { isCorrect, isFinished, processSquare, removeLevel, startLevel } from './actions'
-import movePlayer, { isMove } from './move'
+import PuzzleDisplay from '../view/puzzle';
+import { isCorrect, isFinished, processSquare, startLevel } from './actions';
+import movePlayer, { isMove } from './move';
 
 let level = 1
 // let moves = 0
 let answer = ''
 // let complete = false
 
+// eslint-disable-next-line consistent-return
 export default function updateGame(event) {
   const squares = document.querySelectorAll('.puzzle-square')
 
@@ -16,17 +18,19 @@ export default function updateGame(event) {
   }
 
   if (isCorrect(answer, level)) {
+    // alert('win!!')
+
     answer = ''
     level += 1
-    alert('win!!')
-    alert('add more levels now')
-    removeLevel()
+    // need a timeout here
+    // alert('add more levels now')
+    PuzzleDisplay.removeLevel()
     updateGame()
   } else if (isFinished(answer, level)) {
     answer = ''
     alert('level finished')
     // confirm('retry')
-    removeLevel()
+    PuzzleDisplay.removeLevel()
     updateGame()
   }
 
