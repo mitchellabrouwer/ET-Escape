@@ -2,7 +2,8 @@ import levels from '../model/levels'
 import PuzzleDisplay from '../view/puzzle'
 
 export const isCorrect = (answer, level) => answer === levels[level].answer
-export const isFinished = (answer, level) => answer.length === levels[level].answer.length
+export const isFinished = (answer, level) =>
+  answer.length === levels[level].answer.length
 
 export const startLevel = level => {
   new PuzzleDisplay(levels[level].map).render()
@@ -15,9 +16,9 @@ export const processSquare = (answer, square) => {
 
   if (letter) {
     updatedAnswer += letter
-    newSquare.innerHTML = ''
+    // newSquare.innerHTML = ''
+    PuzzleDisplay.toggleLetter(newSquare)
   }
 
   return updatedAnswer
 }
-

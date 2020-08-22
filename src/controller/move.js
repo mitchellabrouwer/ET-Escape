@@ -1,11 +1,11 @@
 import levels from '../model/levels'
 import PuzzleDisplay from '../view/puzzle'
 
-const left = (event) => event.keyCode === 37 || event.keyCode === 65
-const up = (event) => event.keyCode === 38 || event.keyCode === 87
-const right = (event) => event.keyCode === 39 || event.keyCode === 68
-const down = (event) => event.keyCode === 40 || event.keyCode === 83
-export const isMove = (event) => [left, up, right, down].some((fn) => fn(event))
+const left = event => event.keyCode === 37 || event.keyCode === 65
+const up = event => event.keyCode === 38 || event.keyCode === 87
+const right = event => event.keyCode === 39 || event.keyCode === 68
+const down = event => event.keyCode === 40 || event.keyCode === 83
+export const isMove = event => [left, up, right, down].some(fn => fn(event))
 
 function moveTo(index, [rowMove, columnMove], level) {
   const height = level.map.length

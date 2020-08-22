@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const path = require('path')
 const webpack = require('webpack')

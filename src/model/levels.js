@@ -1,4 +1,4 @@
-import player from '../assets/images/alien.png'
+export const player = 'P1'
 
 const levels = {
   1: {

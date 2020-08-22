@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable class-methods-use-this */
-import player from '../assets/images/alien.png'
+import { player } from '../model/levels'
 
 export default class PuzzleDisplay {
   constructor(levelMap) {
@@ -16,28 +16,27 @@ export default class PuzzleDisplay {
     node.querySelectorAll('*').forEach(n => n.remove())
   }
 
-
   static movePlayer(playerOn, newSquare) {
-    playerOn.classList.remove('square-with-player')
-    newSquare.classList.add('square-with-player')
+    playerOn.classList.toggle('square-with-player')
+    newSquare.classList.toggle('square-with-player')
+  }
+
+  static togglePlayer(node) {
+    node.classList.toggle('square-with-player')
+  }
+
+  static toggleLetter(node, letter) {
+    node.classList.toggle('square-with-letter')
+    node.innerHTML = letter || ''
+  }
+
+  static toggleEmpty(node) {
+    node.classList.toggle('square-vacant')
   }
 
   setStyleSizes() {
     this.nodes.style.setProperty('--puzzle-columns', this.columns)
     this.nodes.style.setProperty('--puzzle-rows', this.rows)
-  }
-
-  showPlayer(node) {
-    node.classList.add('square-with-player')
-  }
-
-  setLetter(node, letter) {
-    node.classList.add('square-with-letter')
-    node.innerHTML = letter
-  }
-
-  setEmpty(node) {
-    node.classList.add('square-vacant')
   }
 
   createSquare() {
@@ -47,15 +46,15 @@ export default class PuzzleDisplay {
   }
 
   render() {
-    this.level.flat().forEach((token) => {
+    this.level.flat().forEach(token => {
       const node = this.createSquare()
 
       if (token === player) {
-        this.showPlayer(node)
+        PuzzleDisplay.togglePlayer(node)
       } else if (/[A-Z]/g.test(token)) {
-        this.setLetter(node, token)
+        PuzzleDisplay.toggleLetter(node, token)
       } else {
-        this.setEmpty(node)
+        PuzzleDisplay.toggleEmpty(node)
       }
     })
   }
