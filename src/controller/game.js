@@ -2,11 +2,11 @@ import { isCorrect, isFinished, processSquare, removeLevel, startLevel } from '.
 import movePlayer, { isMove } from './move'
 
 let level = 1
-let moves = 0
+// let moves = 0
 let answer = ''
 // let complete = false
 
-export function updateGame(event) {
+export default function updateGame(event) {
   const squares = document.querySelectorAll('.puzzle-square')
 
   if (!squares.length) return startLevel(level)
@@ -25,8 +25,10 @@ export function updateGame(event) {
   } else if (isFinished(answer, level)) {
     answer = ''
     alert('level finished')
-    confirm('retry')
+    // confirm('retry')
     removeLevel()
     updateGame()
   }
+
+
 }

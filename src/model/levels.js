@@ -1,6 +1,6 @@
-import player from './../assets/images/alien.png'
+import player from '../assets/images/alien.png'
 
-export const levels = {
+const levels = {
   1: {
     map: [
       [player, 'S', '', 'L', 'I'],
@@ -12,3 +12,5 @@ export const levels = {
     answer: 'ABOUT',
   },
 }
+
+export default levels
