@@ -1,8 +1,14 @@
-import player from './../assets/images/alien.png'
+/* eslint-disable no-param-reassign */
+/* eslint-disable class-methods-use-this */
+import player from '../assets/images/alien.png'
 
 export default class PuzzleDisplay {
   constructor(levelMap) {
     this.level = levelMap
+    this.rows = this.level.length
+    this.columns = this.level[0].length
+    this.nodes = document.querySelector('.puzzle-container')
+    this.setStyleSizes()
   }
 
   static movePlayer(playerOn, newSquare) {
@@ -10,51 +16,33 @@ export default class PuzzleDisplay {
     newSquare.classList.add('show')
   }
 
+  setStyleSizes() {
+    this.nodes.style.setProperty('--puzzle-columns', this.columns)
+    this.nodes.style.setProperty('--puzzle-rows', this.rows)
+  }
+
   showPlayer(node) {
-    node.classList.add('square-active')
-    node.firstChild.classList.add('square-with-player', 'player-image', 'show')
+    node.classList.add('square-with-player')
   }
 
   setLetter(node, letter) {
-    const element = document.createElement(`p`)
-
-    element.innerText = letter
     node.classList.add('square-with-letter')
-    node.appendChild(element)
+    node.innerHTML = letter
   }
 
   setEmpty(node) {
     node.classList.add('square-vacant')
   }
 
-  setPlayerImage() {
-    const hiddenImage = document.createElement('img')
-
-    hiddenImage.src = player
-    hiddenImage.classList.add('player-image')
-    return hiddenImage
-  }
-
-  createDefaultSquare(nodes) {
+  createSquare() {
     const cell = document.createElement('div')
-
-    cell.appendChild(this.setPlayerImage())
-    nodes.appendChild(cell).className = `puzzle-square`
-    return nodes.lastChild
+    this.nodes.appendChild(cell).className = `puzzle-square`
+    return cell
   }
 
   render() {
-    const puzzleNodes = document.querySelector('.puzzle-container')
-    const rows = this.level.length
-    const columns = this.level[0].length
-
-    console.log(puzzleNodes)
-
-    puzzleNodes.style.setProperty('--puzzle-columns', columns)
-    puzzleNodes.style.setProperty('--puzzle-rows', rows)
-
     this.level.flat().forEach((token) => {
-      const node = this.createDefaultSquare(puzzleNodes)
+      const node = this.createSquare()
 
       if (token === player) {
         this.showPlayer(node)
