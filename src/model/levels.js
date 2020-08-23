@@ -9,7 +9,8 @@ const levels = {
       ['C', '', 'U', '', ''],
       ['', 'O', 'X', '', 'I'],
     ],
-    answer: 'ABOUT',
+    solution: 'ABOUT',
+    moves: 10,
   },
 }
 

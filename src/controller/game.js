@@ -1,15 +1,18 @@
-import PuzzleDisplay from '../view/puzzle';
-import { isCorrect, isFinished, processSquare, startLevel } from './actions';
-import movePlayer, { isMove } from './move';
+import PuzzleDisplay from '../view/puzzle'
+import { isCorrect, isFinished, processSquare, startLevel } from './actions'
+import movePlayer, { isMove } from './move'
 
 let level = 1
-// let moves = 0
+const moves = 0
 let answer = ''
-// let complete = false
 
 // eslint-disable-next-line consistent-return
 export default function updateGame(event) {
   const squares = document.querySelectorAll('.puzzle-square')
+  const movesDisplay = document.querySelector('.moves')
+
+  movesDisplay.textContent = `${moves} moves remaining`
+  // levelDisplay.textContent = `level: ${level} / 10  ` // `${level} / ${levels.length}`
 
   if (!squares.length) return startLevel(level)
 
@@ -19,7 +22,6 @@ export default function updateGame(event) {
 
   if (isCorrect(answer, level)) {
     // alert('win!!')
-
     answer = ''
     level += 1
     // need a timeout here
@@ -33,6 +35,4 @@ export default function updateGame(event) {
     PuzzleDisplay.removeLevel()
     updateGame()
   }
-
-
 }

@@ -2,13 +2,27 @@
 /* eslint-disable class-methods-use-this */
 import { player } from '../model/levels'
 
+export function createAnswer(answer) {
+  const node = document.querySelector('.answer')
+  Array.from(Array(answer.length).fill('-')).forEach(underscore => {
+    const box = document.createElement('div')
+    box.textContent = underscore
+    node.appendChild(box).className = `answer-letter`
+  })
+}
+
+export function updateAnswer(answer) {
+  const nodes = document.querySelectorAll('.answer-letter')
+  nodes[answer.length - 1].textContent = answer[answer.length - 1]
+}
+
 export default class PuzzleDisplay {
   constructor(levelMap) {
     this.level = levelMap
     this.rows = this.level.length
     this.columns = this.level[0].length
     this.nodes = document.querySelector('.puzzle-container')
-    this.setStyleSizes()
+    this.setGridSize()
   }
 
   static removeLevel() {
@@ -27,14 +41,14 @@ export default class PuzzleDisplay {
 
   static toggleLetter(node, letter) {
     node.classList.toggle('square-with-letter')
-    node.innerHTML = letter || ''
+    node.textContent = letter || ''
   }
 
   static toggleEmpty(node) {
     node.classList.toggle('square-vacant')
   }
 
-  setStyleSizes() {
+  setGridSize() {
     this.nodes.style.setProperty('--puzzle-columns', this.columns)
     this.nodes.style.setProperty('--puzzle-rows', this.rows)
   }
