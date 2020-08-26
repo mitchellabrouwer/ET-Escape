@@ -22,7 +22,8 @@
         "singleQuote": true,
         "printWidth": 80
       }
-    ]
+    ],
+    "consistent-return": 0
   },
   "plugins": ["html", "prettier"]
 }

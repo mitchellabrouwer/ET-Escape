@@ -1,10 +1,5 @@
-import updateGame from './controller/game'
-import './main.scss'
+import Controller from './controller'
 
-// intro
+const app = new Controller()
 
-updateGame()
-
-document.addEventListener('keydown', updateGame, false)
-
-// submit button to run update game
+app.run()
