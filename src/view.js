@@ -38,10 +38,10 @@ export default class View {
     let span = this.squares[index].querySelector('span')
 
     if (span === null) {
-      this.squares[index].classList.toggle('square-with-letter')
       span = document.createElement('span')
       span.textContent = letter
       this.squares[index].appendChild(span)
+      this.squares[index].classList.toggle('square-with-letter')
     }
 
     span.classList.toggle('show')
