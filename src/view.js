@@ -19,6 +19,13 @@ export default class View {
   }
 
   movePlayer({ from, to }) {
+    if (this.squares[from].classList.contains('square-with-letter')) {
+      this.toggleLetter(from)
+    }
+    if (this.squares[to].classList.contains('square-with-letter')) {
+      this.toggleLetter(to)
+    }
+
     this.squares[from].classList.toggle('square-with-player')
     this.squares[to].classList.toggle('square-with-player')
   }
@@ -28,8 +35,16 @@ export default class View {
   }
 
   toggleLetter(index, letter) {
-    this.squares[index].classList.toggle('square-with-letter')
-    this.squares[index].textContent = letter || ''
+    let span = this.squares[index].querySelector('span')
+
+    if (span === null) {
+      this.squares[index].classList.toggle('square-with-letter')
+      span = document.createElement('span')
+      span.textContent = letter
+      this.squares[index].appendChild(span)
+    }
+
+    span.classList.toggle('show')
   }
 
   toggleEmpty(index) {
