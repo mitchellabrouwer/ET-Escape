@@ -16,13 +16,9 @@ export default class PuzzleCrossword {
     this.solution = levels[level].solution
 
     this.introductionEvent = new Event()
-    // this.startLevelEvent = new Event()
     this.movePlayerEvent = new Event()
     this.modalEvent = new Event()
     this.removeLetter = new Event()
-    // this.passLevelEvent = new Event()
-    // this.failLevelEvent = new Event()
-    // this.invalidMoveEvent = new Event()
   }
 
   isPass() {
