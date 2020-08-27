@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import Event from './event'
 import './main.scss'
 
@@ -8,16 +9,12 @@ const down = event => event.keyCode === 40 || event.keyCode === 83
 
 export default class View {
   constructor() {
-    this.puzzleContainer = document.querySelector('.puzzle-container')
-    this.answerContainer = document.querySelector('.answer')
+    this.puzzleContainer = document.querySelector('#puzzle')
+    this.answerContainer = document.querySelector('#answer')
     this.squares = this.puzzleContainer.childNodes
     this.answerSquares = this.answerContainer.childNodes
 
     this.playGameEvent = new Event()
-  }
-
-  removeLevel() {
-    this.squares.forEach(node => node.remove())
   }
 
   movePlayer({ from, to }) {
@@ -86,23 +83,53 @@ export default class View {
     this.answerSquares[index].textContent = letter
   }
 
-  // eslint-disable-next-line class-methods-use-this
   updateMoves(moves) {
     const movesLeft = document.querySelector('.moves')
     movesLeft.textContent = `${moves} moves remaining`
   }
 
-  // eslint-disable-next-line class-methods-use-this
   levelUp(level) {
     const levelAt = document.querySelector('.hint')
     levelAt.textContent = `hint...${level}`
   }
 
-  render(playerAt, levelMap, hint, solution, level, moves, width, height) {
-    if (this.squares.length) this.removeLevel()
+  openModal({ header, message, button }) {
+    const modal = document.querySelector('#modal')
+    const close = document.querySelector('.modal-button')
+    const heading = document.querySelector('.modal-header')
+    const content = document.querySelector('.modal-text')
+
+    heading.textContent = header
+    content.textContent = message
+    close.textContent = button
+    modal.style.display = 'block'
+
+    close.onclick = function closeButton() {
+      modal.style.display = 'none'
+    }
+
+    window.onclick = function clickOutside(event) {
+      if (event.target === modal) {
+        modal.style.display = 'none'
+      }
+    }
+  }
+
+  resetLevel() {
+    if (this.puzzleContainer.hasChildNodes()) {
+      this.puzzleContainer.querySelectorAll('*').forEach(n => n.remove())
+    }
+    if (this.answerContainer.hasChildNodes()) {
+      this.answerContainer.querySelectorAll('*').forEach(n => n.remove())
+    }
+  }
+
+  render(levelProperties) {
+    const { playerAt, levelMap, hint, solution, moves, width, height } = levelProperties
     const levelAt = document.querySelector('.hint')
     levelAt.textContent = `hint...${hint}`
 
+    this.resetLevel()
     this.setCssVariables(width, height)
     this.addKeyboardListeners(width)
     this.createAnswer(solution)
@@ -117,7 +144,7 @@ export default class View {
 
       if (playerAt === i) {
         this.togglePlayer(i)
-      } else if (/[A-Z]/g.test(token)) {
+      } else if (/^[A-Za-z]$/g.test(token)) {
         this.toggleLetter(i, token)
       } else {
         this.toggleEmpty(i)

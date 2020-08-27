@@ -6,15 +6,6 @@ const player = 'P1'
 export default class PuzzleCrossword {
   constructor(level = 1) {
     this.level = level
-    this.height = levels[level].puzzle.length
-    this.width = levels[level].puzzle[0].length
-    this.levelMap = [...levels[level].puzzle.flat()]
-
-    this.playerAt = this.levelMap.indexOf(player)
-    this.moves = levels[level].moves
-    this.answer = ''
-    this.solution = levels[level].solution
-    this.hint = levels[level].hint
 
     this.introductionEvent = new Event()
     this.moveEvent = new Event()
@@ -23,6 +14,8 @@ export default class PuzzleCrossword {
     this.levelEvent = new Event()
     this.modalEvent = new Event()
     this.removeLetter = new Event()
+
+    this.newLevel()
   }
 
   isPass() {
@@ -33,14 +26,34 @@ export default class PuzzleCrossword {
     return this.answer.length === this.solution.length
   }
 
+  newLevel() {
+    this.height = levels[this.level].puzzle.length
+    this.width = levels[this.level].puzzle[0].length
+    this.levelMap = [...levels[this.level].puzzle.flat()]
+    this.playerAt = this.levelMap.indexOf(player)
+    this.moves = levels[this.level].moves
+    this.answer = ''
+    this.solution = levels[this.level].solution
+    this.hint = levels[this.level].hint
+  }
+
   process() {
     if (this.isPass()) {
-      this.modalEvent.trigger('Congratulations')
-      console.log('WIN')
-      // this.levelUp()
+      this.modalEvent.trigger({
+        header: 'You made it through',
+        message: 'Congratulations!!!',
+        button: 'Next level',
+      })
+      this.level += 1
+      this.newLevel()
+      this.levelEvent.trigger(this)
     } else if (this.isFail()) {
-      this.modalEvent.trigger('Try again')
-      console.log('LOSE')
+      this.modalEvent.trigger({
+        header: 'Lost in wormhole!!',
+        message: 'That sucks...luckily this alien can respawn',
+        button: 'Play again',
+      })
+      this.levelEvent.trigger(this)
     }
   }
 
@@ -58,11 +71,6 @@ export default class PuzzleCrossword {
   subtractMove() {
     this.moves -= 1
     this.movesEvent.trigger(this.moves)
-  }
-
-  levelUp() {
-    this.level += 1
-    this.levelEvent.trigger(this.level)
   }
 
   rowFromIndex(index) {
