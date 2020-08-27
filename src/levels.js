@@ -1,5 +1,6 @@
 const levels = {
   1: {
+    hint: 'more or less',
     puzzle: [
       ['P1', 'S', '', 'L', 'I'],
       ['', 'A', '', 'R', ''],

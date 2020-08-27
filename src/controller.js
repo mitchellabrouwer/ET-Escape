@@ -8,14 +8,15 @@ class Controller {
 
     this.view.playGameEvent.addListener(move => this.model.play(move))
 
-    this.model.movePlayerEvent.addListener(moveTo =>
-      this.view.movePlayer(moveTo)
-    )
+    this.model.moveEvent.addListener(moveTo => this.view.movePlayer(moveTo))
+
+    this.model.answerEvent.addListener(answer => this.view.updateAnswer(answer))
+    this.model.movesEvent.addListener(moves => this.view.updateMoves(moves))
   }
 
   run() {
-    const { playerAt, levelMap, width, height } = this.model
-    this.view.render(playerAt, levelMap, width, height)
+    const { playerAt, levelMap, hint, solution, level, moves, width, height } = this.model
+    this.view.render(playerAt, levelMap, hint, solution, level, moves, width, height)
   }
 }
 

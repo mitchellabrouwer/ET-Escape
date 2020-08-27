@@ -9,7 +9,9 @@ const down = event => event.keyCode === 40 || event.keyCode === 83
 export default class View {
   constructor() {
     this.puzzleContainer = document.querySelector('.puzzle-container')
-    this.squares = this.puzzleContainer.childNodes // or create this on the fly?
+    this.answerContainer = document.querySelector('.answer')
+    this.squares = this.puzzleContainer.childNodes
+    this.answerSquares = this.answerContainer.childNodes
 
     this.playGameEvent = new Event()
   }
@@ -70,18 +72,46 @@ export default class View {
     })
   }
 
-  render(playerAt, levelMap, width, height) {
+  createAnswer(solution) {
+    Array(solution.length)
+      .fill('*')
+      .forEach(character => {
+        const square = document.createElement('div')
+        square.textContent = character
+        this.answerContainer.appendChild(square).className = `answer-letter`
+      })
+  }
+
+  updateAnswer({ letter, index }) {
+    this.answerSquares[index].textContent = letter
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  updateMoves(moves) {
+    const movesLeft = document.querySelector('.moves')
+    movesLeft.textContent = `${moves} moves remaining`
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  levelUp(level) {
+    const levelAt = document.querySelector('.hint')
+    levelAt.textContent = `hint...${level}`
+  }
+
+  render(playerAt, levelMap, hint, solution, level, moves, width, height) {
     if (this.squares.length) this.removeLevel()
+    const levelAt = document.querySelector('.hint')
+    levelAt.textContent = `hint...${hint}`
 
     this.setCssVariables(width, height)
     this.addKeyboardListeners(width)
+    this.createAnswer(solution)
+    this.updateMoves(moves)
 
     levelMap.forEach((token, i) => {
       const cell = document.createElement('div')
 
-      cell.addEventListener('click', () =>
-        this.playGameEvent.trigger({ index: i })
-      )
+      cell.addEventListener('click', () => this.playGameEvent.trigger({ index: i }))
 
       this.puzzleContainer.appendChild(cell).className = `puzzle-square`
 

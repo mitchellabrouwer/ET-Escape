@@ -11,12 +11,16 @@ export default class PuzzleCrossword {
     this.levelMap = [...levels[level].puzzle.flat()]
 
     this.playerAt = this.levelMap.indexOf(player)
-    this.moves = 0
+    this.moves = levels[level].moves
     this.answer = ''
     this.solution = levels[level].solution
+    this.hint = levels[level].hint
 
     this.introductionEvent = new Event()
-    this.movePlayerEvent = new Event()
+    this.moveEvent = new Event()
+    this.answerEvent = new Event()
+    this.movesEvent = new Event()
+    this.levelEvent = new Event()
     this.modalEvent = new Event()
     this.removeLetter = new Event()
   }
@@ -26,21 +30,39 @@ export default class PuzzleCrossword {
   }
 
   isFail() {
-    return !this.isPass() && this.answer.length === this.solution.length
+    return this.answer.length === this.solution.length
   }
 
   process() {
     if (this.isPass()) {
       this.modalEvent.trigger('Congratulations')
+      console.log('WIN')
+      // this.levelUp()
     } else if (this.isFail()) {
       this.modalEvent.trigger('Try again')
+      console.log('LOSE')
     }
   }
 
   updateAnswer() {
-    if (/[A-Za-z]/.test(this.playerAt)) {
-      this.answer += this.levelMap[this.playerAt]
+    const token = this.levelMap[this.playerAt]
+    if (/^[A-Za-z]$/.test(token)) {
+      this.answerEvent.trigger({
+        letter: token,
+        index: this.answer.length,
+      })
+      this.answer += token
     }
+  }
+
+  subtractMove() {
+    this.moves -= 1
+    this.movesEvent.trigger(this.moves)
+  }
+
+  levelUp() {
+    this.level += 1
+    this.levelEvent.trigger(this.level)
   }
 
   rowFromIndex(index) {
@@ -67,7 +89,7 @@ export default class PuzzleCrossword {
     const newIndex = row * this.width + column
 
     if (this.validMove(this.playerAt, newIndex)) {
-      this.movePlayerEvent.trigger({ from: this.playerAt, to: newIndex })
+      this.moveEvent.trigger({ from: this.playerAt, to: newIndex })
       this.playerAt = newIndex
     }
 
@@ -79,8 +101,7 @@ export default class PuzzleCrossword {
 
     this.move(index || this.playerAt + direction)
     this.updateAnswer()
+    this.subtractMove()
     this.process()
-
-    this.moves += 1
   }
 }

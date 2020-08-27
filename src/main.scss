@@ -39,49 +39,49 @@ body {
     display: grid;
     grid-template-rows: repeat(var(--puzzle-rows), 60px);
     grid-template-columns: repeat(var(--puzzle-columns), 60px);
-  }
 
-  .puzzle-square {
-    padding: 1em;
-    border: 0.5px solid darkgray;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+    .puzzle-square {
+      padding: 1em;
+      border: 0.5px solid darkgray;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-  .square-active {
-    background-color: white;
-  }
+      &.square-active {
+        background-color: white;
+      }
 
-  .square-vacant {
-    background-color: white;
+      &.square-vacant {
+        background-color: white;
 
-    &::before {
-      content: '';
-      display: inline-block;
-      width: 1px;
-      height: 0;
-      padding-bottom: calc(100% / (var(--aspect-ratio)));
-    }
-  }
+        &::before {
+          content: '';
+          display: inline-block;
+          width: 1px;
+          height: 0;
+          padding-bottom: calc(100% / (var(--aspect-ratio)));
+        }
+      }
 
-  .square-with-letter {
-    background-color: black;
-    font-size: 1.5rem;
-    color: white;
+      &.square-with-letter {
+        background-color: black;
+        font-size: 1.5rem;
+        color: white;
 
-    span {
-      display: none;
+        span {
+          display: none;
 
-      &.show {
-        display: inline;
+          &.show {
+            display: inline;
+          }
+        }
+      }
+
+      &.square-with-player {
+        background: url('./assets/images/alien.svg') center center no-repeat;
+        background-size: 20%;
       }
     }
-  }
-
-  .square-with-player {
-    background: url('./assets/images/alien.svg') center center no-repeat;
-    background-size: 20%;
   }
 
   .player-image {
@@ -114,23 +114,29 @@ body {
   display: flex;
   text-align: center;
   justify-content: center;
+
+  .answer-letter {
+    color: white;
+    margin-top: 1rem;
+    flex: 0 0 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    border: 1px solid #a8a38c;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 1px;
+      height: 0;
+      padding-bottom: calc(100% / (var(--aspect-ratio)));
+    }
+  }
 }
 
-.answer-letter {
+.hint {
   color: white;
-  margin-top: 1rem;
-  flex: 0 0 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: black;
-  border: 1px solid #a8a38c;
-
-  &::before {
-    content: '';
-    display: inline-block;
-    width: 1px;
-    height: 0;
-    padding-bottom: calc(100% / (var(--aspect-ratio)));
-  }
+  text-align: center;
+  font-weight: 500;
 }
