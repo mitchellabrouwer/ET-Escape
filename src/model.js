@@ -91,11 +91,7 @@ export default class PuzzleCrossword {
     ].indexOf(newIndex)
   }
 
-  move(index) {
-    const row = this.rowFromIndex(index)
-    const column = this.columnFromIndex(index)
-    const newIndex = row * this.width + column
-
+  move(newIndex) {
     if (this.validMove(this.playerAt, newIndex)) {
       this.moveEvent.trigger({ from: this.playerAt, to: newIndex })
       this.playerAt = newIndex
@@ -104,10 +100,16 @@ export default class PuzzleCrossword {
     // what to do if invalid move pressed?
   }
 
+  directionToIndex([dy, dx]) {
+    const row = this.rowFromIndex(this.playerAt)
+    const column = this.columnFromIndex(this.playerAt)
+    return (row + dy) * this.width + (column + dx)
+  }
+
   play({ index, direction }) {
     if (this.level === 0) return this.introductionEvent.trigger()
 
-    this.move(index || this.playerAt + direction)
+    this.move(index || this.directionToIndex(direction))
     this.updateAnswer()
     this.subtractMove()
     this.process()

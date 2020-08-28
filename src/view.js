@@ -15,6 +15,8 @@ export default class View {
     this.answerSquares = this.answerContainer.childNodes
 
     this.playGameEvent = new Event()
+
+    this.addKeyboardListeners()
   }
 
   movePlayer({ from, to }) {
@@ -55,16 +57,16 @@ export default class View {
     this.puzzleContainer.style.setProperty('--puzzle-rows', height)
   }
 
-  addKeyboardListeners(width) {
+  addKeyboardListeners() {
     document.addEventListener('keydown', event => {
       if (left(event)) {
-        this.playGameEvent.trigger({ direction: -1 })
+        this.playGameEvent.trigger({ direction: [0, -1] })
       } else if (right(event)) {
-        this.playGameEvent.trigger({ direction: 1 })
+        this.playGameEvent.trigger({ direction: [0, +1] })
       } else if (up(event)) {
-        this.playGameEvent.trigger({ direction: -width })
+        this.playGameEvent.trigger({ direction: [-1, 0] })
       } else if (down(event)) {
-        this.playGameEvent.trigger({ direction: width })
+        this.playGameEvent.trigger({ direction: [+1, 0] })
       }
     })
   }
@@ -126,12 +128,12 @@ export default class View {
 
   render(levelProperties) {
     const { playerAt, levelMap, hint, solution, moves, width, height } = levelProperties
+
     const levelAt = document.querySelector('.hint')
     levelAt.textContent = `hint...${hint}`
 
     this.resetLevel()
     this.setCssVariables(width, height)
-    this.addKeyboardListeners(width)
     this.createAnswer(solution)
     this.updateMoves(moves)
 
