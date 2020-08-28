@@ -3,6 +3,8 @@ import levels from './levels'
 
 const player = 'P1'
 
+const mod = (number, modulo) => (number + modulo) % modulo
+
 export default class PuzzleCrossword {
   constructor(level = 1) {
     this.level = level
@@ -15,7 +17,7 @@ export default class PuzzleCrossword {
     this.modalEvent = new Event()
     this.removeLetter = new Event()
 
-    this.newLevel()
+    this.resetLevel()
   }
 
   isPass() {
@@ -23,10 +25,10 @@ export default class PuzzleCrossword {
   }
 
   isFail() {
-    return this.answer.length === this.solution.length
+    return this.answer.length === this.solution.length || this.moves === 0
   }
 
-  newLevel() {
+  resetLevel() {
     this.height = levels[this.level].puzzle.length
     this.width = levels[this.level].puzzle[0].length
     this.levelMap = [...levels[this.level].puzzle.flat()]
@@ -45,7 +47,7 @@ export default class PuzzleCrossword {
         button: 'Next level',
       })
       this.level += 1
-      this.newLevel()
+      this.resetLevel()
       this.levelEvent.trigger(this)
     } else if (this.isFail()) {
       this.modalEvent.trigger({
@@ -53,6 +55,7 @@ export default class PuzzleCrossword {
         message: 'That sucks...luckily this alien can respawn',
         button: 'Play again',
       })
+      this.resetLevel()
       this.levelEvent.trigger(this)
     }
   }
@@ -68,11 +71,6 @@ export default class PuzzleCrossword {
     }
   }
 
-  subtractMove() {
-    this.moves -= 1
-    this.movesEvent.trigger(this.moves)
-  }
-
   rowFromIndex(index) {
     return (Math.floor(index / this.height) + this.width) % this.width
   }
@@ -81,37 +79,38 @@ export default class PuzzleCrossword {
     return ((index % this.width) + this.height) % this.height
   }
 
-  validMove(newIndex) {
-    const currentIndex = this.playerAt
-    return [
-      (currentIndex + 1 + this.width) % this.width,
-      (currentIndex - 1 + this.width) % this.width,
-      (currentIndex + this.width + this.height) % this.height,
-      (currentIndex - this.width + this.height) % this.height,
-    ].indexOf(newIndex)
-  }
-
-  move(newIndex) {
-    if (this.validMove(this.playerAt, newIndex)) {
-      this.moveEvent.trigger({ from: this.playerAt, to: newIndex })
-      this.playerAt = newIndex
-    }
-
-    // what to do if invalid move pressed?
-  }
-
-  directionToIndex([dy, dx]) {
+  shiftIndex([dy, dx]) {
     const row = this.rowFromIndex(this.playerAt)
     const column = this.columnFromIndex(this.playerAt)
-    return (row + dy) * this.width + (column + dx)
+
+    return mod(row + dy, this.height) * this.width + mod(column + dx, this.width)
+  }
+
+  validMove(toIndex) {
+    return (
+      [
+        this.shiftIndex([-1, 0]),
+        this.shiftIndex([+1, 0]),
+        this.shiftIndex([0, -1]),
+        this.shiftIndex([0, +1]),
+      ].indexOf(toIndex) > -1
+    )
+  }
+
+  move(toIndex) {
+    if (this.validMove(toIndex)) {
+      this.moves -= 1
+      this.movesEvent.trigger(this.moves)
+      this.moveEvent.trigger({ from: this.playerAt, to: toIndex })
+      this.playerAt = toIndex
+    }
   }
 
   play({ index, direction }) {
     if (this.level === 0) return this.introductionEvent.trigger()
 
-    this.move(index || this.directionToIndex(direction))
+    this.move(index || this.shiftIndex(direction))
     this.updateAnswer()
-    this.subtractMove()
     this.process()
   }
 }
