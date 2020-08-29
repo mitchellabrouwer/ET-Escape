@@ -9,13 +9,13 @@ export default class PuzzleCrossword {
   constructor(level = 1) {
     this.level = level
 
-    this.introductionEvent = new Event()
-    this.moveEvent = new Event()
-    this.answerEvent = new Event()
-    this.movesEvent = new Event()
-    this.levelEvent = new Event()
-    this.modalEvent = new Event()
-    this.removeLetter = new Event()
+    // this.onLanding = new Event()
+    this.onMove = new Event()
+    this.onAnswer = new Event()
+    this.onUseMove = new Event()
+    this.onLevel = new Event()
+    this.onModal = new Event()
+    this.onEnd = new Event()
 
     this.resetLevel()
   }
@@ -41,29 +41,29 @@ export default class PuzzleCrossword {
 
   process() {
     if (this.isPass()) {
-      this.modalEvent.trigger({
+      this.onModal.trigger({
         header: 'You made it through',
         message: 'Congratulations!!!',
         button: 'Next level',
       })
       this.level += 1
       this.resetLevel()
-      this.levelEvent.trigger(this)
+      this.onLevel.trigger(this)
     } else if (this.isFail()) {
-      this.modalEvent.trigger({
+      this.onModal.trigger({
         header: 'Lost in wormhole!!',
         message: 'That sucks...luckily this alien can respawn',
         button: 'Play again',
       })
       this.resetLevel()
-      this.levelEvent.trigger(this)
+      this.onLevel.trigger(this)
     }
   }
 
   updateAnswer() {
     const token = this.levelMap[this.playerAt]
     if (/^[A-Za-z]$/.test(token)) {
-      this.answerEvent.trigger({
+      this.onAnswer.trigger({
         letter: token,
         index: this.answer.length,
       })
@@ -100,14 +100,14 @@ export default class PuzzleCrossword {
   move(toIndex) {
     if (this.validMove(toIndex)) {
       this.moves -= 1
-      this.movesEvent.trigger(this.moves)
-      this.moveEvent.trigger({ from: this.playerAt, to: toIndex })
+      this.onUseMove.trigger(this.moves)
+      this.onMove.trigger({ from: this.playerAt, to: toIndex })
       this.playerAt = toIndex
     }
   }
 
   play({ index, direction }) {
-    if (this.level === 0) return this.introductionEvent.trigger()
+    if (this.level === Object.keys(levels).length) return this.onEnd.trigger()
 
     this.move(index ?? this.shiftIndex(direction))
     this.updateAnswer()

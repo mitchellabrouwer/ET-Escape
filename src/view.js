@@ -7,6 +7,14 @@ const up = event => event.keyCode === 38 || event.keyCode === 87
 const right = event => event.keyCode === 39 || event.keyCode === 68
 const down = event => event.keyCode === 40 || event.keyCode === 83
 
+// TODO: break down into smaller classes.
+
+// class Move
+
+// class Modal
+
+// class Puzzle
+
 export default class View {
   constructor() {
     this.puzzleContainer = document.querySelector('#puzzle')
@@ -17,6 +25,47 @@ export default class View {
     this.playGameEvent = new Event()
 
     this.addKeyboardListeners()
+  }
+
+  showEnding() {
+    const pages = document.querySelector('#pages')
+    const ending = document.querySelector('#ending')
+    pages.style.display = 'block'
+    ending.style.display = 'block'
+  }
+
+  showBriefing() {
+    const pages = document.querySelector('#pages')
+    const briefing = document.querySelector('#briefing')
+    const button = document.querySelector('#briefing .button')
+
+    pages.style.display = 'block'
+    briefing.style.display = 'block'
+
+    button.addEventListener('click', () => {
+      pages.style.display = ''
+      briefing.style.display = ''
+    })
+  }
+
+  showIntroduction() {
+    const pages = document.querySelector('#pages')
+    const crash = document.querySelector('#crash')
+    const spaceship = document.querySelector('.spaceship')
+
+    pages.style.display = 'block'
+    crash.style.display = 'block'
+
+    spaceship.addEventListener(
+      'animationend',
+      function removeHeight() {
+        pages.style.display = ''
+        crash.style.display = ''
+        this.showBriefing()
+        spaceship.removeEventListener('animationend', removeHeight, false)
+      }.bind(this),
+      false
+    )
   }
 
   movePlayer({ from, to }) {
@@ -97,7 +146,7 @@ export default class View {
 
   openModal({ header, message, button }) {
     const modal = document.querySelector('#modal')
-    const close = document.querySelector('.modal-button')
+    const close = document.querySelector('#modal button')
     const heading = document.querySelector('.modal-header')
     const content = document.querySelector('.modal-text')
 

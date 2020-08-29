@@ -8,14 +8,15 @@ class Controller {
 
     this.view.playGameEvent.addListener(move => this.model.play(move))
 
-    this.model.moveEvent.addListener(moveTo => this.view.movePlayer(moveTo))
-    this.model.answerEvent.addListener(answer => this.view.updateAnswer(answer))
-    this.model.movesEvent.addListener(moves => this.view.updateMoves(moves))
-    this.model.modalEvent.addListener(message => this.view.openModal(message))
-    this.model.levelEvent.addListener(model => this.view.render(model))
+    this.model.onMove.addListener(moveTo => this.view.movePlayer(moveTo))
+    this.model.onAnswer.addListener(answer => this.view.updateAnswer(answer))
+    this.model.onUseMove.addListener(moves => this.view.updateMoves(moves))
+    this.model.onModal.addListener(message => this.view.openModal(message))
+    this.model.onLevel.addListener(model => this.view.render(model))
   }
 
   run() {
+    this.view.showIntroduction()
     this.view.render(this.model)
   }
 }
