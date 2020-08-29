@@ -62,7 +62,7 @@ body {
   }
 
   #crash {
-    display: none;
+    display: block;
 
     .spaceship {
       height: 50vh;
@@ -73,7 +73,7 @@ body {
 
     @keyframes spin {
       0% {
-        background-size: 80%;
+        background-size: 50%;
         transform: rotate(0deg);
       }
       100% {
