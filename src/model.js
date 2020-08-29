@@ -109,7 +109,7 @@ export default class PuzzleCrossword {
   play({ index, direction }) {
     if (this.level === 0) return this.introductionEvent.trigger()
 
-    this.move(index || this.shiftIndex(direction))
+    this.move(index ?? this.shiftIndex(direction))
     this.updateAnswer()
     this.process()
   }
