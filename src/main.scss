@@ -67,6 +67,7 @@ body {
     .spaceship {
       height: 50vh;
       background: url('./assets/images/spaceship.svg') center center no-repeat;
+      background-size: 100%;
       animation: spin 5s forwards;
       transform-origin: center center;
     }

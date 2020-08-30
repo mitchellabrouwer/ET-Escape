@@ -1,7 +1,14 @@
-const common = require('./webpack.common.js')
+/* eslint-disable import/no-extraneous-dependencies */
 const { merge } = require('webpack-merge')
 const TerserPlugin = require('terser-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+// const CompressionPlugin = require('compression-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const webpack = require('webpack')
+// const autoprefixer = require('autoprefixer')
+const common = require('./webpack.common.js')
 
 module.exports = merge(common, {
   mode: 'production',
@@ -9,6 +16,7 @@ module.exports = merge(common, {
     usedExports: true,
     minimize: true,
     minimizer: [
+      new OptimizeCssAssetsPlugin(),
       new TerserPlugin({
         terserOptions: {
           ecma: undefined,
@@ -51,5 +59,8 @@ module.exports = merge(common, {
         minifyURLs: true,
       },
     }),
+    new CleanWebpackPlugin(),
+    new webpack.HashedModuleIdsPlugin(),
+    // new CompressionPlugin(), // gives rough idea of .zip size add +~1kb
   ],
 })

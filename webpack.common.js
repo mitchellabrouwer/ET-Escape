@@ -1,7 +1,6 @@
-/* eslint-disable import/no-extraneous-dependencies */
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const path = require('path')
-const webpack = require('webpack')
+// eslint-disable-next-line import/no-extraneous-dependencies
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
   entry: {
@@ -9,21 +8,10 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'js/bundle.js',
+    filename: 'bundle-[contentHash].js',
   },
   module: {
     rules: [
-      {
-        test: /\.s[ac]ss$/i,
-        use: [
-          // Creates `style` nodes from JS strings
-          'style-loader',
-          // Translates CSS into CommonJS
-          'css-loader',
-          // Compiles Sass to CSS
-          'sass-loader',
-        ],
-      },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
@@ -43,7 +31,20 @@ module.exports = {
           minimize: false,
         },
       },
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          MiniCssExtractPlugin.loader, // 3. Extract css into files
+          'css-loader', // 2.Translates CSS into CommonJS
+          'postcss-loader',
+          'sass-loader', // 1. Compiles Sass to CSS
+        ],
+      },
     ],
   },
-  plugins: [new webpack.HashedModuleIdsPlugin(), new CleanWebpackPlugin()],
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: '[name]-[contentHash].css',
+    }),
+  ],
 }
