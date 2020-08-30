@@ -21,6 +21,7 @@
   "devDependencies": {
     "@babel/core": "^7.11.1",
     "@babel/preset-env": "^7.11.0",
+    "autoprefixer": "^9.8.6",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
     "clean-webpack-plugin": "^3.0.0",
@@ -38,6 +39,7 @@
     "html-loader": "^1.1.0",
     "html-webpack-plugin": "^4.3.0",
     "path": "^0.12.7",
+    "postcss-loader": "^3.0.0",
     "prettier": "^1.16.4",
     "sass": "^1.26.10",
     "sass-loader": "^9.0.3",
@@ -52,5 +54,6 @@
   "bugs": {
     "url": "https://github.com/mitchellabrouwer/ET-Escape/issues"
   },
-  "homepage": "https://github.com/mitchellabrouwer/ET-Escape#readme"
+  "homepage": "https://github.com/mitchellabrouwer/ET-Escape#readme",
+  "dependencies": {}
 }
