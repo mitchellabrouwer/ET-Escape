@@ -68,11 +68,26 @@ body {
       height: 50vh;
       background: url('./assets/images/spaceship.svg') center center no-repeat;
       background-size: 100%;
-      animation: spin 5s forwards;
+      animation: spinMedium 5s forwards;
       transform-origin: center center;
+
+      @media (min-width: $medium) {
+        animation: spinSmall 5s forwards;
+      }
     }
 
-    @keyframes spin {
+    @keyframes spinSmall {
+      0% {
+        background-size: 30%;
+        transform: rotate(0deg);
+      }
+      100% {
+        background-size: 0%;
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes spinMedium {
       0% {
         background-size: 50%;
         transform: rotate(0deg);
