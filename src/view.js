@@ -46,6 +46,14 @@ export default class View {
       pages.style.display = ''
       briefing.style.display = ''
     })
+
+    window.addEventListener('keydown', function enter(event) {
+      if (event.key === 'Enter') {
+        pages.style.display = ''
+        briefing.style.display = ''
+        window.removeEventListener('keydown', enter)
+      }
+    })
   }
 
   showIntroduction() {
@@ -164,6 +172,13 @@ export default class View {
         modal.style.display = 'none'
       }
     }
+
+    window.addEventListener('keydown', function enterKey(event) {
+      if (event.key === 'Enter') {
+        modal.style.display = 'none'
+        window.removeEventListener('keydown', enterKey)
+      }
+    })
   }
 
   resetLevel() {
