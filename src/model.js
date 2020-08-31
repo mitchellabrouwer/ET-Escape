@@ -103,6 +103,7 @@ export default class PuzzleCrossword {
       this.onUseMove.trigger(this.moves)
       this.onMove.trigger({ from: this.playerAt, to: toIndex })
       this.playerAt = toIndex
+      this.updateAnswer()
     }
   }
 
@@ -110,7 +111,6 @@ export default class PuzzleCrossword {
     if (this.level === Object.keys(levels).length) return this.onEnd.trigger()
 
     this.move(index ?? this.shiftIndex(direction))
-    this.updateAnswer()
     this.process()
   }
 }
