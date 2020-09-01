@@ -9,7 +9,6 @@ export default class PuzzleCrossword {
   constructor(level = 1) {
     this.level = level
 
-    // this.onLanding = new Event()
     this.onMove = new Event()
     this.onAnswer = new Event()
     this.onUseMove = new Event()
@@ -20,23 +19,24 @@ export default class PuzzleCrossword {
     this.resetLevel()
   }
 
+  resetLevel() {
+    this.height = levels[this.level].puzzle.length
+    this.width = levels[this.level].puzzle[0].length
+    this.levelMap = [...levels[this.level].puzzle.flat()]
+    this.playerAt = this.levelMap.indexOf(player)
+
+    this.hint = levels[this.level].hint
+    this.moves = levels[this.level].moves
+    this.solution = levels[this.level].solution
+    this.answer = ''
+  }
+
   isPass() {
     return this.answer === this.solution
   }
 
   isFail() {
     return this.answer.length === this.solution.length || this.moves === 0
-  }
-
-  resetLevel() {
-    this.height = levels[this.level].puzzle.length
-    this.width = levels[this.level].puzzle[0].length
-    this.levelMap = [...levels[this.level].puzzle.flat()]
-    this.playerAt = this.levelMap.indexOf(player)
-    this.moves = levels[this.level].moves
-    this.answer = ''
-    this.solution = levels[this.level].solution
-    this.hint = levels[this.level].hint
   }
 
   process() {
@@ -51,8 +51,8 @@ export default class PuzzleCrossword {
       this.onLevel.trigger(this)
     } else if (this.isFail()) {
       this.onModal.trigger({
-        header: 'Lost in wormhole!!',
-        message: 'That sucks...luckily this alien can respawn',
+        header: 'Lost in a wormhole!!',
+        message: 'That sucks...',
         button: 'Play again',
       })
       this.resetLevel()

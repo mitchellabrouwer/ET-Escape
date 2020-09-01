@@ -194,7 +194,7 @@ export default class View {
     const { playerAt, levelMap, hint, solution, moves, width, height } = levelProperties
 
     const levelAt = document.querySelector('.hint')
-    levelAt.textContent = `hint...${hint}`
+    levelAt.textContent = `Hint...${hint}`
 
     this.resetLevel()
     this.setCssVariables(width, height)
