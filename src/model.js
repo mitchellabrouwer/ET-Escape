@@ -5,7 +5,7 @@ const player = 'P1'
 
 const mod = (number, modulo) => (number + modulo) % modulo
 
-export default class PuzzleCrossword {
+export default class Game {
   constructor(level = 1) {
     this.level = level
 

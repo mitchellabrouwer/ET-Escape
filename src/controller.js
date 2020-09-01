@@ -1,23 +1,35 @@
-import PuzzleCrossword from './model'
-import View from './view'
+import Game from './model'
+import Modal from './views/modal'
+import Pages from './views/pages'
+import Puzzle from './views/puzzle'
 
 class Controller {
   constructor() {
-    this.model = new PuzzleCrossword()
-    this.view = new View()
+    this.model = new Game()
 
-    this.view.playGameEvent.addListener(move => this.model.play(move))
+    this.configure()
+  }
 
-    this.model.onMove.addListener(moveTo => this.view.movePlayer(moveTo))
-    this.model.onAnswer.addListener(answer => this.view.updateAnswer(answer))
-    this.model.onUseMove.addListener(moves => this.view.updateMoves(moves))
-    this.model.onModal.addListener(message => this.view.openModal(message))
-    this.model.onLevel.addListener(model => this.view.render(model))
+  configure() {
+    const { playerAt, levelMap, hint, solution, moves, width, height } = this.model
+
+    this.puzzle = new Puzzle(playerAt, levelMap, hint, solution, moves, width, height)
+    this.pages = new Pages()
+    this.modal = new Modal()
+
+    this.puzzle.onMove.addListener(move => this.model.play(move))
+
+    this.model.onModal.addListener(message => this.modal.open(message))
+    this.model.onMove.addListener(moveTo => this.puzzle.movePlayer(moveTo))
+    this.model.onAnswer.addListener(answer => this.puzzle.updateAnswer(answer))
+    this.model.onUseMove.addListener(remaining => this.puzzle.updateMoves(remaining))
+    this.model.onLevel.addListener(model => this.puzzle.render(model)) // new Puzzle after finishing or use the same one??
+    this.model.onEnd.addListener(() => this.pages.showEnding())
   }
 
   run() {
-    this.view.showIntroduction()
-    this.view.render(this.model)
+    this.pages.showIntroduction()
+    this.puzzle.render()
   }
 }
 
