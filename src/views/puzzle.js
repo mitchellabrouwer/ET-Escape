@@ -9,16 +9,7 @@ const right = event => event.keyCode === 39 || event.keyCode === 68
 const down = event => event.keyCode === 40 || event.keyCode === 83
 
 export default class Puzzle {
-  constructor(playerAt, levelMap, hint, solution, moves, width, height) {
-    this.hint = hint
-    this.solution = solution
-    this.moves = moves
-    this.width = width
-    this.height = height
-
-    this.grid = new Grid(levelMap, playerAt, width, height)
-    this.squareNodes = this.grid.squareNodes
-
+  constructor() {
     this.answer = document.querySelector('#answer')
     this.answerNodes = this.answer.childNodes
 
@@ -85,7 +76,16 @@ export default class Puzzle {
     this.squareNodes[to].classList.toggle('square-with-player')
   }
 
-  render() {
+  render({ playerAt, levelMap, hint, solution, moves, width, height }) {
+    this.hint = hint
+    this.solution = solution
+    this.moves = moves
+    this.width = width
+    this.height = height
+
+    this.grid = new Grid(levelMap, playerAt, width, height)
+    this.squareNodes = this.grid.squareNodes
+
     this.resetLevel()
     this.grid.render(this.onMove)
     this.createAnswer()
