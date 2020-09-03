@@ -69,7 +69,7 @@ const levels = {
       ['', '', '', '', '', ''],
     ],
     solution: 'the',
-    moves: 10,
+    moves: 8,
   },
   7: {
     hint: 'tell it to the judge',
@@ -82,7 +82,7 @@ const levels = {
       ['', '', '', 'P1', 'd', ''],
     ],
     solution: 'truth',
-    moves: 16,
+    moves: 15,
   },
   8: {
     hint: 'completely asleep',
@@ -95,7 +95,7 @@ const levels = {
       ['u', '', 'u', '', 'j', 't'],
     ],
     solution: 'out',
-    moves: 5,
+    moves: 6,
   },
   9: {
     hint: 'exists',
@@ -115,15 +115,15 @@ const levels = {
     hint: 'calming when repeated',
     puzzle: [
       ['q', '', '', 'y', 'l', 'e', ''],
-      ['r', 'a', '', 'b', 't', '', ''],
+      ['h', 'a', '', 'b', 't', '', ''],
       ['g', 'x', 'P1', '', '', 'o', 'z'],
       ['', '', 'p', 'k', 'f', '', 'u'],
       ['', 'w', 'c', '', 'n', '', 'v'],
       ['h', 'i', 'j', '', 'a', 'd', ''],
-      ['', '', 's', '', 'm', '', ''],
+      ['', '', 's', '', 'm', '', 'r'],
     ],
     solution: 'there',
-    moves: 50,
+    moves: 13,
   },
 }
 
