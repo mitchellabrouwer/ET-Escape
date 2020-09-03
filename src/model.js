@@ -39,6 +39,10 @@ export default class Game {
     return this.answer.length === this.solution.length || this.moves === 0
   }
 
+  gameComplete() {
+    return this.level > Object.keys(levels).length
+  }
+
   process() {
     if (this.isPass()) {
       this.onModal.trigger({
@@ -47,8 +51,13 @@ export default class Game {
         button: 'Next level',
       })
       this.level += 1
-      this.resetLevel()
-      this.onLevel.trigger(this)
+
+      if (this.gameComplete()) {
+        this.onEnd.trigger()
+      } else {
+        this.resetLevel()
+        this.onLevel.trigger(this)
+      }
     } else if (this.isFail()) {
       this.onModal.trigger({
         header: 'Lost in a wormhole!!',
@@ -108,8 +117,6 @@ export default class Game {
   }
 
   play({ index, direction }) {
-    if (this.level === Object.keys(levels).length) return this.onEnd.trigger()
-
     this.move(index ?? this.shiftIndex(direction))
     this.process()
   }
