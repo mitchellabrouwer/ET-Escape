@@ -110,6 +110,21 @@ body {
 
   #ending {
     display: none;
+
+    .glowing {
+      text-align: center;
+      color: #fff;
+      text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #05ff00, 0 0 20px #05ff00,
+        0 0 25px #05ff00, 0 0 30px #05ff00, 0 0 35px #05ff00;
+    }
+
+    .link {
+      color: #05ff00;
+      text-decoration: none;
+      &:hover {
+        color: #c3c4c6;
+      }
+    }
   }
 }
 
@@ -185,7 +200,7 @@ body {
 }
 
 #progress {
-  color: red;
+  color: #05ff00;
   text-align: center;
   padding-bottom: 0.3rem;
   font-size: 0.8rem;
