@@ -50,9 +50,9 @@ export default class Puzzle {
     movesLeft.textContent = `${moves} moves remaining`
   }
 
-  updateHint(hint) {
+  updateHint(hint, level) {
     const levelAt = document.querySelector('.hint')
-    levelAt.textContent = `Hint...${hint}`
+    levelAt.textContent = `Level ${level}: ${hint}`
   }
 
   resetLevel() {
@@ -76,7 +76,7 @@ export default class Puzzle {
     this.squareNodes[to].classList.toggle('square-with-player')
   }
 
-  render({ playerAt, levelMap, hint, solution, moves, width, height }) {
+  render({ level, playerAt, levelMap, hint, solution, moves, width, height }) {
     this.hint = hint
     this.solution = solution
     this.moves = moves
@@ -90,6 +90,6 @@ export default class Puzzle {
     this.grid.render(this.onMove)
     this.createAnswer()
     this.updateMoves(this.moves)
-    this.updateHint(this.hint)
+    this.updateHint(this.hint, level)
   }
 }
