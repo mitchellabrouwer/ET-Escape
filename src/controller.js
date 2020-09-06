@@ -27,7 +27,7 @@ class Controller {
   }
 
   run() {
-    if (!JSON.parse(localStorage.getItem('etLevel'))) this.pages.showIntroduction()
+    if (!JSON.parse(localStorage.getItem('etEscapeLevel'))) this.pages.showIntroduction()
     this.puzzle.render(this.model)
   }
 }
