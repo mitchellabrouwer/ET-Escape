@@ -7,7 +7,7 @@ const mod = (number, modulo) => (number + modulo) % modulo
 
 export default class Game {
   constructor(level = 1) {
-    this.level = level
+    this.level = JSON.parse(localStorage.getItem('etLevel')) || level
 
     this.onMove = new Event()
     this.onAnswer = new Event()
@@ -51,6 +51,7 @@ export default class Game {
         button: 'Next level',
       })
       this.level += 1
+      localStorage.setItem('etLevel', this.level.toString())
 
       if (this.gameComplete()) {
         this.onEnd.trigger()

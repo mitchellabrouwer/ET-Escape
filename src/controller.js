@@ -27,7 +27,7 @@ class Controller {
   }
 
   run() {
-    this.pages.showIntroduction()
+    if (!JSON.parse(localStorage.getItem('etLevel'))) this.pages.showIntroduction()
     this.puzzle.render(this.model)
   }
 }
