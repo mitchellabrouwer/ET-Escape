@@ -51,13 +51,14 @@ export default class Game {
         button: 'Next level',
       })
       this.level += 1
-      localStorage.setItem('etEscapeLevel', this.level.toString())
 
       if (this.gameComplete()) {
         this.onEnd.trigger()
+        localStorage.removeItem('etEscapeLevel')
       } else {
         this.resetLevel()
         this.onLevel.trigger(this)
+        localStorage.setItem('etEscapeLevel', this.level.toString())
       }
     } else if (this.isFail()) {
       this.onModal.trigger({
