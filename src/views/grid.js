@@ -37,7 +37,6 @@ export default class Grid {
   }
 
   render(onMove) {
-    console.log(onMove)
     this.levelMap.forEach((token, i) => {
       const cell = document.createElement('div')
 
@@ -55,5 +54,3 @@ export default class Grid {
     })
   }
 }
-
-/* eslint-disable class-methods-use-this */
