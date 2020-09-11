@@ -16,7 +16,7 @@ $font: 'Verdana';
 
 html {
   font-family: $font, serif;
-  font-size: min(max(0.8rem, 2vw), 18px);
+  font-size: min(max(0.8rem, 4vw), 16px);
 
   background-color: #000000;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1600 800'%3E%3Cg %3E%3Cpolygon fill='%23222222' points='800 100 0 200 0 800 1600 800 1600 200'/%3E%3Cpolygon fill='%23444444' points='800 200 0 400 0 800 1600 800 1600 400'/%3E%3Cpolygon fill='%23666666' points='800 300 0 600 0 800 1600 800 1600 600'/%3E%3Cpolygon fill='%23888888' points='1600 800 800 400 0 800'/%3E%3Cpolygon fill='%23aaaaaa' points='1280 800 800 500 320 800'/%3E%3Cpolygon fill='%23cccccc' points='533.3 800 1066.7 800 800 600'/%3E%3Cpolygon fill='%23EEE' points='684.1 800 914.3 800 800 700'/%3E%3C/g%3E%3C/svg%3E");
@@ -38,7 +38,7 @@ body {
 .spacehip-logo {
   text-align: center;
   display: block;
-  margin: 0 auto;
+  margin: 4vw auto;
   width: 80%;
   height: 5vh;
   min-height: 30px;
@@ -143,9 +143,10 @@ body {
     box-shadow: 0 12px 30px #a8a38c;
     text-align: center;
     margin: auto;
+
     display: grid;
-    grid-template-rows: repeat(var(--puzzle-rows), minmax(60px, 10vh));
-    grid-template-columns: repeat(var(--puzzle-columns), minmax(60px, 10vh));
+    grid-template-rows: repeat(var(--puzzle-rows), minmax(40px, 5vw));
+    grid-template-columns: repeat(var(--puzzle-columns), minmax(40px, 5vw));
 
     .puzzle-square {
       padding: 1em;
@@ -174,10 +175,11 @@ body {
         background-color: black;
         font-size: 1.5rem;
         color: white;
+        padding: 0;
+        margin: 0;
 
         span {
           display: none;
-          font-size: min(max(1rem, 10vh), 24px);
 
           &.show {
             display: inline;
@@ -187,7 +189,7 @@ body {
 
       &.square-with-player {
         background: url('./assets/images/alien.svg') center center no-repeat;
-        background-size: 20%;
+        background-size: 28%;
       }
     }
   }
@@ -214,7 +216,6 @@ body {
   font-size: 0.8rem;
 
   .moves {
-    font-size: min(max(1rem, 3vw), 20px);
     font-weight: 100;
   }
 }
@@ -227,7 +228,7 @@ body {
   .answer-letter {
     color: white;
     margin-top: 1rem;
-    flex: 0 0 50px;
+    flex: 0 0 45px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -274,7 +275,7 @@ body {
     }
 
     @media (min-width: $large) {
-      width: 30%;
+      width: 40%;
     }
 
     .modal-header {
