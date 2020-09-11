@@ -22,7 +22,7 @@ export default class Game {
   resetLevel() {
     this.height = levels[this.level].puzzle.length
     this.width = levels[this.level].puzzle[0].length
-    this.levelMap = [...levels[this.level].puzzle.flat()]
+    this.levelMap = [...levels[this.level].puzzle.reduce((a, b) => a.concat(b), [])]
     this.playerAt = this.levelMap.indexOf(player)
 
     this.hint = levels[this.level].hint
